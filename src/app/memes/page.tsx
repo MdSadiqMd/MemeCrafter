@@ -4,6 +4,7 @@ import { NextPage } from "next";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 import { IMeme } from "@/types/meme.types";
 
@@ -30,25 +31,30 @@ const Home: NextPage = () => {
     };
 
     return (
-        <div className="row">
-            {data.map((meme) => (
-                <div key={meme.id} className="meme">
-                    <h3>{meme.name}</h3>
-                    <img src={meme.url} alt={meme.name} width={meme.width} height={meme.height} />
-                    <button
-                        className={'group/button rounded-lg bg-[#222222] text-black'}
-                        onClick={(e: any) => router.push(`/memes/:id?url=${meme.url}`)}
-                    >
-                        <span
-                            className={
-                                'block -translate-x-1 -translate-y-1 rounded-lg border-2 border-[#222222] bg-[#ff527a] px-4 py-1 text-sm font-medium tracking-tight transition-all group-hover/button:-translate-y-2 group-active/button:translate-x-0 group-active/button:translate-y-0'
-                            }
-                        >
-                            Edit
-                        </span>
-                    </button>
-                </div>
-            ))}
+        <div className="p-4 bg-gray-100 min-h-screen">
+            <h1 className="text-3xl font-bold text-center mb-8">Meme Crafters</h1>
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                {data.map((meme) => (
+                    <div key={meme.id} className="bg-white rounded-lg shadow-lg overflow-hidden transform transition-transform duration-300 hover:scale-105">
+                        <Image
+                            src={meme.url}
+                            alt={meme.name}
+                            width={meme.width}
+                            height={meme.height}
+                            className="object-cover w-full h-40"
+                        />
+                        <div className="p-4">
+                            <h3 className="text-lg font-semibold text-gray-800 mb-2">{meme.name}</h3>
+                            <button
+                                className="w-full bg-blue-500 text-white rounded-lg px-4 py-2 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50"
+                                onClick={() => router.push(`/memes/:id?url=${meme.url}`)}
+                            >
+                                Edit
+                            </button>
+                        </div>
+                    </div>
+                ))}
+            </div>
         </div>
     );
 };
