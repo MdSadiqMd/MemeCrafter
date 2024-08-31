@@ -12,6 +12,8 @@ interface TextElement {
     id: number;
 }
 
+export const runtime = 'edge';
+
 const Page: NextPage = () => {
     const searchParams = useSearchParams();
     const search = searchParams.get('url') as string | null;
